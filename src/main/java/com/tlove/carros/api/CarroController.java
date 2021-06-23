@@ -28,4 +28,8 @@ public class CarroController {
 		return carroService.getCarroById(id);
 	}
 	
+	@GetMapping("/tipo/{tipo}")
+	public Iterable<Carro> getCarrosByTipo(@PathVariable("tipo") String tipo) {
+		return carroService.getCarroByTipo(tipo);
+	}
 }

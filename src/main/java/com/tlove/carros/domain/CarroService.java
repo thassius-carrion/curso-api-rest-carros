@@ -1,7 +1,7 @@
 package com.tlove.carros.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +21,9 @@ public class CarroService {
 		return repository.findById(id);
 	}
 	
-	
-	public List<Carro> getCarrosFake() {
-		List<Carro> carros = new ArrayList<>();
-		
-		carros.add(new Carro(1L, "Fusca"));
-		carros.add(new Carro(2L, "Brasilia"));
-		return carros;
+	public Iterable<Carro> getCarroByTipo(String tipo) {
+		return repository.findByTipo(tipo);
 	}
 	
+		
 }

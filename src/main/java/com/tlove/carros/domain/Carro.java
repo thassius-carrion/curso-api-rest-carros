@@ -14,10 +14,13 @@ public class Carro {
 	
 	private String nome;
 	
-	public Carro(Long id, String nome) {
+	private String tipo;
+	
+	public Carro(Long id, String nome, String tipo) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.tipo = tipo;
 	}
 	
 	public Carro() {
@@ -38,7 +41,14 @@ public class Carro {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 	
 
 }
