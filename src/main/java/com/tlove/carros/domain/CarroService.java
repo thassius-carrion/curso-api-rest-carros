@@ -1,7 +1,5 @@
 package com.tlove.carros.domain;
 
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +22,9 @@ public class CarroService {
 	public Iterable<Carro> getCarroByTipo(String tipo) {
 		return repository.findByTipo(tipo);
 	}
-	
+
+	public void save(Carro carro) {
+		repository.save(carro);		
+	}
 		
 }
