@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 @Service
 public class CarroService {
@@ -25,6 +26,24 @@ public class CarroService {
 
 	public void save(Carro carro) {
 		repository.save(carro);		
+	}
+
+
+	public Carro update(Long id, Carro carro) {
+		Assert.notNull(id, "id não encontrado");
+		
+		Optional<Carro> optional = getCarroById(id);
+		
+		if(optional.isPresent()) {
+			Carro car = optional.get();
+			car.setNome(carro.getNome());
+			car.setTipo(carro.getTipo());
+			repository.save(car);
+			return car;
+		}
+		else {
+			throw new RuntimeException("Não foi possivel atualizar");		}
+		
 	}
 		
 }

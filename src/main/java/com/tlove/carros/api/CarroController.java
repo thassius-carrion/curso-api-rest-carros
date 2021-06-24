@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,5 +42,10 @@ public class CarroController {
 		return "Carro salvo com sucesso: " + carro.getId();
 	}
 	
+	@PutMapping("/{id}")
+	public String put(@PathVariable("id") Long id, @RequestBody Carro carro) {
+		carroService.update(id, carro); 
+		return "Carro de Id " + id + " atualizado com sucesso!";
+	}
 	
 }
