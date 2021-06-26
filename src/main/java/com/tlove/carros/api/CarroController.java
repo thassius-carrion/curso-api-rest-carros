@@ -3,6 +3,7 @@ package com.tlove.carros.api;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,6 +47,12 @@ public class CarroController {
 	public String put(@PathVariable("id") Long id, @RequestBody Carro carro) {
 		carroService.update(id, carro); 
 		return "Carro de Id " + id + " atualizado com sucesso!";
+	}
+	
+	@DeleteMapping("/{id}")
+	public String delete(@PathVariable("id") Long id) {
+		carroService.delete(id);
+		return "Carro deletado com sucesso. ";
 	}
 	
 }

@@ -42,8 +42,19 @@ public class CarroService {
 			return car;
 		}
 		else {
-			throw new RuntimeException("Não foi possivel atualizar");		}
+			throw new RuntimeException("Não foi possivel atualizar");		
+			}
 		
+	}
+
+	public void delete(Long id) {	
+		Optional<Carro> optional = getCarroById(id);
+		if(optional.isPresent()) {
+			repository.deleteById(id);
+		}
+		else {
+			throw new RuntimeException("Não foi possivel deletar.");		
+		}	
 	}
 		
 }
