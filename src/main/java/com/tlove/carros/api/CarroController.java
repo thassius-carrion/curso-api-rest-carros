@@ -1,5 +1,6 @@
 package com.tlove.carros.api;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,6 @@ public class CarroController {
 				.map(c -> ResponseEntity.ok(c))
 				.orElse(ResponseEntity.notFound().build());
 		
-		
 		/*return carro.isPresent() ?
 				ResponseEntity.ok(carro) :
 				ResponseEntity.notFound().build();
@@ -53,8 +53,14 @@ public class CarroController {
 	}
 	
 	@GetMapping("/tipo/{tipo}")
-	public Iterable<Carro> getCarrosByTipo(@PathVariable("tipo") String tipo) {
-		return carroService.getCarroByTipo(tipo);
+	public ResponseEntity getCarrosByTipo(@PathVariable("tipo") String tipo) {
+		
+			List<Carro> carros = carroService.getCarroByTipo(tipo);
+			
+			return carros.isEmpty() ?
+					ResponseEntity.noContent().build() :
+					ResponseEntity.ok(carros);
+					
 	}
 	
 	@PostMapping
