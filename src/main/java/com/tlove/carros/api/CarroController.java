@@ -69,7 +69,7 @@ public class CarroController {
 	}
 	
 	@PutMapping("/{id}")
-	public String put(@PathVariable("id") Long id, @RequestBody CarroDTO carro) {
+	public String put(@PathVariable("id") Long id, @RequestBody Carro carro) {
 		carroService.update(id, carro); 
 		return "Carro de Id " + id + " atualizado com sucesso!";
 	}

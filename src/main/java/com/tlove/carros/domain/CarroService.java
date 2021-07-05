@@ -7,6 +7,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -19,15 +20,15 @@ public class CarroService {
 	private CarroRepository repository;
 	
 	public List<CarroDTO> getCarros() {
-		return repository.findAll().stream().map(c -> new CarroDTO(c)).collect(Collectors.toList());
+		return repository.findAll().stream().map(c -> CarroDTO.create(c)).collect(Collectors.toList());
 	}
 	
 	public Optional<CarroDTO> getCarroById(Long id) {
-		return repository.findById(id).map(c -> new CarroDTO(c));
+		return repository.findById(id).map(c -> CarroDTO.create(c));
 	}
 	
 	public List<CarroDTO> getCarroByTipo(String tipo) {
-		return repository.findByTipo(tipo).stream().map(c -> new CarroDTO(c)).collect(Collectors.toList());
+		return repository.findByTipo(tipo).stream().map(c -> CarroDTO.create(c)).collect(Collectors.toList());
 	}
 
 	public void save(Carro carro) {
