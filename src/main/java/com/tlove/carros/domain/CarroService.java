@@ -1,11 +1,16 @@
 package com.tlove.carros.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
+import com.tlove.carros.domain.dto.CarroDTO;
 
 @Service
 public class CarroService {
@@ -13,16 +18,16 @@ public class CarroService {
 	@Autowired
 	private CarroRepository repository;
 	
-	public Iterable<Carro> getCarros() {
-		return repository.findAll();
+	public List<CarroDTO> getCarros() {
+		return repository.findAll().stream().map(c -> new CarroDTO(c)).collect(Collectors.toList());
 	}
 	
-	public Optional<Carro> getCarroById(Long id) {
-		return repository.findById(id);
+	public Optional<CarroDTO> getCarroById(Long id) {
+		return repository.findById(id).map(c -> new CarroDTO(c));
 	}
 	
-	public List<Carro> getCarroByTipo(String tipo) {
-		return repository.findByTipo(tipo);
+	public List<CarroDTO> getCarroByTipo(String tipo) {
+		return repository.findByTipo(tipo).stream().map(c -> new CarroDTO(c)).collect(Collectors.toList());
 	}
 
 	public void save(Carro carro) {
@@ -33,7 +38,7 @@ public class CarroService {
 	public Carro update(Long id, Carro carro) {
 		Assert.notNull(id, "id não encontrado");
 		
-		Optional<Carro> optional = getCarroById(id);
+		Optional<Carro> optional = repository.findById(id);
 		
 		if(optional.isPresent()) {
 			Carro car = optional.get();
@@ -49,8 +54,7 @@ public class CarroService {
 	}
 
 	public void delete(Long id) {	
-		Optional<Carro> optional = getCarroById(id);
-		if(optional.isPresent()) {
+		if(getCarroById(id).isPresent()) {
 			repository.deleteById(id);
 		}
 		else {

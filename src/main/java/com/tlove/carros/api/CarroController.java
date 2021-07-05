@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tlove.carros.domain.Carro;
 import com.tlove.carros.domain.CarroService;
+import com.tlove.carros.domain.dto.CarroDTO;
 
 @RestController
 @RequestMapping("/api/v1/carros")
@@ -25,14 +26,13 @@ public class CarroController {
 	private CarroService carroService;
 	
 	@GetMapping
-	public ResponseEntity<Iterable<Carro>> getCarros() {
+	public ResponseEntity getCarros() {
 		return ResponseEntity.ok(carroService.getCarros());
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity getCarroById(@PathVariable("id") Long id) {
-		Optional<Carro> carro = carroService.getCarroById(id);
-		
+		Optional<CarroDTO> carro = carroService.getCarroById(id);
 		
 		return carro
 				.map(c -> ResponseEntity.ok(c))
@@ -54,8 +54,7 @@ public class CarroController {
 	
 	@GetMapping("/tipo/{tipo}")
 	public ResponseEntity getCarrosByTipo(@PathVariable("tipo") String tipo) {
-		
-			List<Carro> carros = carroService.getCarroByTipo(tipo);
+			List<CarroDTO> carros = carroService.getCarroByTipo(tipo);
 			
 			return carros.isEmpty() ?
 					ResponseEntity.noContent().build() :
@@ -70,7 +69,7 @@ public class CarroController {
 	}
 	
 	@PutMapping("/{id}")
-	public String put(@PathVariable("id") Long id, @RequestBody Carro carro) {
+	public String put(@PathVariable("id") Long id, @RequestBody CarroDTO carro) {
 		carroService.update(id, carro); 
 		return "Carro de Id " + id + " atualizado com sucesso!";
 	}
