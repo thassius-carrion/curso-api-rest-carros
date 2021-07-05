@@ -31,12 +31,12 @@ public class CarroService {
 		return repository.findByTipo(tipo).stream().map(c -> CarroDTO.create(c)).collect(Collectors.toList());
 	}
 
-	public void save(Carro carro) {
-		repository.save(carro);		
+	public CarroDTO save(Carro carro) {
+		return CarroDTO.create(repository.save(carro));		
 	}
 
 
-	public Carro update(Long id, Carro carro) {
+	public CarroDTO update(Long id, Carro carro) {
 		Assert.notNull(id, "id não encontrado");
 		
 		Optional<Carro> optional = repository.findById(id);
@@ -46,20 +46,21 @@ public class CarroService {
 			car.setNome(carro.getNome());
 			car.setTipo(carro.getTipo());
 			repository.save(car);
-			return car;
+			return CarroDTO.create(car);
 		}
 		else {
-			throw new RuntimeException("Não foi possivel atualizar");		
+			return null;	
 			}
 		
 	}
 
-	public void delete(Long id) {	
+	public boolean delete(Long id) {	
 		if(getCarroById(id).isPresent()) {
 			repository.deleteById(id);
+			return true;
 		}
 		else {
-			throw new RuntimeException("Não foi possivel deletar.");		
+			return false;		
 		}	
 	}
 		
